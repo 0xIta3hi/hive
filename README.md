@@ -101,7 +101,7 @@ Use Hive when the bottleneck is no longer the model but the harness around it:
 
 - Python 3.11+ for agent development
 - An LLM provider that powers the agents
-- **ripgrep (optional, recommended on Windows):** The `terminal_rg` / `terminal_glob` search tools use ripgrep for faster file search. If not installed, a Python fallback is used. On Windows: `winget install BurntSushi.ripgrep` or `scoop install ripgrep`
+- **ripgrep (required for full search):** Quickstart installs and verifies `rg`; the tools container also includes it. To repair an existing installation, run `uv run scripts/ensure_ripgrep.py --install`. Windows uses `winget install --exact --id BurntSushi.ripgrep.MSVC --source winget --scope user` (Scoop/Chocolatey are alternatives). A custom installation can be selected with `HIVE_RIPGREP_PATH` set to the absolute executable path. Missing `rg` makes `terminal_rg` fail explicitly unless approximate search is requested with `allow_fallback=True`.
 
 > **Windows Users:** Native Windows is supported via `quickstart.ps1` and `hive.ps1`. Run these in PowerShell 5.1+. WSL is also an option but not required.
 

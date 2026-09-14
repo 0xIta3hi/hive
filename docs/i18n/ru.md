@@ -101,7 +101,7 @@ Hive может не быть лучшим выбором, если вы лиш�
 
 - Python 3.11+ для разработки агентов
 - LLM-провайдер, который обеспечивает работу агентов
-- **ripgrep (опционально, рекомендуется в Windows):** Поисковые инструменты `terminal_rg` / `terminal_glob` используют ripgrep для более быстрого поиска файлов. Если он не установлен, используется резервный вариант на Python. В Windows: `winget install BurntSushi.ripgrep` или `scoop install ripgrep`
+- **ripgrep (для полноценного поиска):** Quickstart устанавливает и проверяет `rg`. Для исправления существующей установки выполните `uv run scripts/ensure_ripgrep.py --install`. Пакет Windows называется `BurntSushi.ripgrep.MSVC`; абсолютный путь к другому исполняемому файлу можно задать через `HIVE_RIPGREP_PATH`. Без `rg` инструмент `terminal_rg` возвращает ошибку, если приближённый поиск не запрошен явно через `allow_fallback=True`.
 
 > **Пользователи Windows:** Нативная поддержка Windows обеспечивается через `quickstart.ps1` и `hive.ps1`. Запускайте их в PowerShell 5.1+. WSL также возможен, но не обязателен.
 

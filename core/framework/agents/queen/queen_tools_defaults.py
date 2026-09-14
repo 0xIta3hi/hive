@@ -59,6 +59,7 @@ _TOOL_CATEGORIES: dict[str, list[str]] = {
         "pdf_read",
         "attach_file",
     ],
+    "code_editing": ["read_file", "edit_file"],
     # Terminal basic — the subset queens get out of the box.
     #   terminal_exec — foreground command execution (Bash equivalent)
     #   terminal_rg   — ripgrep content search (Grep equivalent)
@@ -69,17 +70,18 @@ _TOOL_CATEGORIES: dict[str, list[str]] = {
     # a deferred-result handle — ``output_handle`` — when output overflows
     # max_output_kb. The tool that redeems it MUST ship in the same tier as
     # terminal_exec; a handle nobody can redeem is worse than no handle at
-    # all. (Slow commands are separately handled by
-    # ``LoopConfig.background_tools`` + the synthetic ``collect_result``,
-    # which bypass this allowlist entirely.)
+    # all. Slow calls first use collect_result, but terminal_exec may itself
+    # return a job_id. Job logs and management must therefore travel with exec.
     "terminal_basic": [
         "terminal_exec",
         "terminal_rg",
         "terminal_glob",
         "terminal_output_get",
+        "terminal_job_logs",
+        "terminal_job_manage",
     ],
-    # Terminal advanced — the power-user tools beyond the basics. Not in
-    # any role default; opt in explicitly per-queen via the Tool Library.
+    # Terminal advanced adds explicit job creation and PTYs. Its retrieval
+    # tools also ship with basic exec so promoted jobs are never stranded.
     #   terminal_job_*   — background job lifecycle (start/manage/logs)
     #   terminal_output_get — fetch captured output from foreground exec
     #   terminal_pty_*   — persistent PTY sessions (open/run/close)
@@ -128,6 +130,8 @@ _TOOL_CATEGORIES: dict[str, list[str]] = {
     "terminal_core": [
         "terminal_exec",
         "terminal_output_get",
+        "terminal_job_logs",
+        "terminal_job_manage",
     ],
     "terminal_extended": [
         "terminal_rg",

@@ -2032,9 +2032,7 @@ class AgentLoop(AgentProtocol):
             # prune/summary budgets instead of collapsing to 32k under them.
             from framework.config import get_max_context_tokens as _live_mct
 
-            conversation._max_context_tokens = _live_mct(
-                fallback=self._config.max_context_tokens
-            )
+            conversation._max_context_tokens = _live_mct(fallback=self._config.max_context_tokens)
 
             await self._publish_context_usage(ctx, conversation, "iteration_start", tools=tools)
 
@@ -6545,6 +6543,22 @@ class AgentLoop(AgentProtocol):
         timeout, resetting the MCP connection.)
         """
         timeout = float(getattr(self._config, "background_tool_timeout_seconds", 235.0))
+        if tc.tool_name == "terminal_exec":
+            inputs = tc.tool_input or {}
+            try:
+                waits = [float(inputs.get("timeout_sec", 60)), float(inputs.get("auto_background_after_sec", 30))]
+                inline_wait = min(value for value in waits if value > 0)
+            except (TypeError, ValueError):
+                inline_wait = float("inf")
+            if inline_wait + 5 >= timeout:
+                return ToolResult(
+                    tool_use_id=tc.tool_use_id,
+                    content=(
+                        "Terminal foreground wait exceeds the tool-call budget. Use a shorter "
+                        "auto_background_after_sec or terminal_job_start, then poll terminal_job_logs."
+                    ),
+                    is_error=True,
+                )
 
         def _retrieve(t: asyncio.Task) -> None:
             # Retrieve any exception so a never-collected task doesn't log
@@ -6575,7 +6589,7 @@ class AgentLoop(AgentProtocol):
                 # shield: a grace-window timeout must not cancel the in-flight
                 # work — it still has the full `timeout` budget to finish in.
                 result = await asyncio.wait_for(asyncio.shield(task), timeout=grace)
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 pass  # genuinely slow — fall through and hand back the handle
             except Exception:
                 # Failed fast. Let collect_result surface it rather than

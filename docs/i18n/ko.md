@@ -101,7 +101,7 @@ Hive는 AI 에이전트를 프로토타입에서 프로덕션으로 옮기는 �
 
 - 에이전트 개발을 위한 Python 3.11+
 - 에이전트를 구동하는 LLM 제공자
-- **ripgrep (선택 사항, Windows에서 권장):** `terminal_rg` / `terminal_glob` 검색 도구는 더 빠른 파일 검색을 위해 ripgrep을 사용합니다. 설치되어 있지 않으면 Python 폴백이 사용됩니다. Windows에서는: `winget install BurntSushi.ripgrep` 또는 `scoop install ripgrep`
+- **ripgrep (전체 검색 기능에 필요):** Quickstart가 `rg`를 설치하고 검증합니다. 기존 환경을 복구하려면 `uv run scripts/ensure_ripgrep.py --install`을 실행하세요. Windows 패키지 이름은 `BurntSushi.ripgrep.MSVC`이며, 별도 실행 파일은 `HIVE_RIPGREP_PATH`에 절대 경로로 지정할 수 있습니다. `rg`가 없으면 `terminal_rg`는 오류를 반환하며, `allow_fallback=True`를 명시한 경우에만 근사 검색을 사용합니다.
 
 > **Windows 사용자:** 네이티브 Windows는 `quickstart.ps1` 및 `hive.ps1`을 통해 지원됩니다. 이들을 PowerShell 5.1+ 에서 실행하세요. WSL도 선택 가능하지만 필수는 아닙니다.
 

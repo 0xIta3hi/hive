@@ -101,7 +101,7 @@ Hive का उपयोग तब करें जब बाधा (bottleneck)
 
 - एजेंट विकास के लिए Python 3.11+
 - एक LLM प्रदाता जो एजेंट्स को शक्ति देता है
-- **ripgrep (वैकल्पिक, Windows पर अनुशंसित):** `terminal_rg` / `terminal_glob` सर्च टूल्स तेज़ फ़ाइल सर्च के लिए ripgrep का उपयोग करते हैं। यदि इंस्टॉल न हो, तो एक Python फ़ॉलबैक का उपयोग किया जाता है। Windows पर: `winget install BurntSushi.ripgrep` या `scoop install ripgrep`
+- **ripgrep (पूर्ण खोज के लिए आवश्यक):** Quickstart `rg` को इंस्टॉल करके जाँचता है। मौजूदा इंस्टॉलेशन सुधारने के लिए `uv run scripts/ensure_ripgrep.py --install` चलाएँ। Windows पैकेज का नाम `BurntSushi.ripgrep.MSVC` है; किसी अन्य executable का पूर्ण पथ `HIVE_RIPGREP_PATH` में दिया जा सकता है। `rg` के बिना `terminal_rg` त्रुटि देता है, जब तक `allow_fallback=True` के साथ अनुमानित खोज स्पष्ट रूप से न माँगी जाए।
 
 > **Windows उपयोगकर्ता:** नेटिव Windows को `quickstart.ps1` और `hive.ps1` के माध्यम से सपोर्ट किया जाता है। इन्हें PowerShell 5.1+ में चलाएँ। WSL भी एक विकल्प है लेकिन आवश्यक नहीं।
 

@@ -206,7 +206,10 @@ def build_collect_result_tool() -> Tool:
             'that returned {"status":"started","handle":"bg_…"}. Pass that handle. '
             'It waits a few seconds and returns {"status":"pending"} if the work '
             "isn't done yet; keep calling it until you get the real result. This "
-            "is how you retrieve image_generate output."
+            "is how you retrieve image_generate and slow terminal_exec results. "
+            "If the result contains auto_backgrounded=true and job_id, the "
+            "command is still a terminal job: use terminal_job_logs(job_id) "
+            "for its final output/status, or terminal_job_manage to stop it."
         ),
         parameters={
             "type": "object",

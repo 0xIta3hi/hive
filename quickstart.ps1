@@ -561,6 +561,13 @@ try {
         exit 1
     }
 
+    # Search must work before onboarding reports a successful installation.
+    & $UvCmd run --no-sync (Join-Path $ScriptDir "scripts\ensure_ripgrep.py") --install
+    if ($LASTEXITCODE -ne 0) {
+        Write-Fail "ripgrep setup failed; follow the instructions above and rerun quickstart."
+        exit 1
+    }
+
     # Check for tesseract binary (required for OCR on scanned PDFs/images via pytesseract)
     Write-Host "  Checking for tesseract... " -NoNewline
     $tesseractCmd = Get-Command tesseract -ErrorAction SilentlyContinue

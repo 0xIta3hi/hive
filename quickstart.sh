@@ -271,6 +271,12 @@ else
     exit 1
 fi
 
+# Search must work before onboarding reports a successful installation.
+if ! uv run --no-sync "$SCRIPT_DIR/scripts/ensure_ripgrep.py" --install; then
+    echo "ripgrep setup failed; follow the instructions above and rerun quickstart."
+    exit 1
+fi
+
 # Check for sqlite3 CLI (required for colony progress tracking)
 echo -n "  Checking for sqlite3... "
 if command -v sqlite3 &> /dev/null; then

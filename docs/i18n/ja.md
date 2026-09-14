@@ -101,7 +101,7 @@ Hive が適しているのは、次のような場合です：
 
 - Python 3.11+ — エージェント開発用
 - エージェントを動かす LLM プロバイダー
-- **ripgrep（オプション、Windows では推奨）：** `terminal_rg` / `terminal_glob` 検索ツールは、より高速なファイル検索のために ripgrep を使用します。インストールされていない場合は、Python のフォールバックが使用されます。Windows の場合：`winget install BurntSushi.ripgrep` または `scoop install ripgrep`
+- **ripgrep（完全な検索に必要）：** Quickstart が `rg` をインストールして検証します。既存環境の修復には `uv run scripts/ensure_ripgrep.py --install` を実行してください。Windows のパッケージ名は `BurntSushi.ripgrep.MSVC` です。独自の実行ファイルは `HIVE_RIPGREP_PATH` に絶対パスで指定できます。`rg` がない場合、`terminal_rg` はエラーを返し、`allow_fallback=True` を明示した場合のみ近似検索を使用します。
 
 > **Windows ユーザーへ：** ネイティブ Windows は `quickstart.ps1` および `hive.ps1` を介してサポートされています。これらは PowerShell 5.1+ で実行してください。WSL も選択肢の 1 つですが、必須ではありません。
 

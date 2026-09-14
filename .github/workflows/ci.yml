@@ -84,10 +84,16 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Install dependencies and run tests
+      - name: Install dependencies
+        working-directory: tools
+        run: uv sync --extra dev
+
+      - name: Install and verify ripgrep
+        run: uv run --no-sync scripts/ensure_ripgrep.py --install
+
+      - name: Install browser and run tests
         working-directory: tools
         run: |
-          uv sync --extra dev
           # chart_tools renders ECharts/Mermaid via Playwright (headless
           # Chromium); install the browser so those smoke tests can run.
           uv run playwright install chromium

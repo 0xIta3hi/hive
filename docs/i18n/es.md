@@ -101,7 +101,7 @@ Usa Hive cuando el cuello de botella ya no es el modelo, sino el arnés que lo r
 
 - Python 3.11+ para el desarrollo de agentes
 - Un proveedor de LLM que impulse a los agentes
-- **ripgrep (opcional, recomendado en Windows):** Las herramientas de búsqueda `terminal_rg` / `terminal_glob` usan ripgrep para búsquedas de archivos más rápidas. Si no está instalado, se usa una alternativa en Python. En Windows: `winget install BurntSushi.ripgrep` o `scoop install ripgrep`
+- **ripgrep (necesario para la búsqueda completa):** Quickstart instala y verifica `rg`. Para reparar una instalación existente, ejecuta `uv run scripts/ensure_ripgrep.py --install`. El paquete de Windows es `BurntSushi.ripgrep.MSVC`; puedes indicar una ruta absoluta al ejecutable con `HIVE_RIPGREP_PATH`. Sin `rg`, `terminal_rg` devuelve un error salvo que se solicite una búsqueda aproximada con `allow_fallback=True`.
 
 > **Usuarios de Windows:** Windows nativo es compatible mediante `quickstart.ps1` y `hive.ps1`. Ejecútalos en PowerShell 5.1+. WSL también es una opción, pero no es obligatorio.
 

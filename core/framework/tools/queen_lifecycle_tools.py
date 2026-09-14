@@ -340,6 +340,15 @@ class QueenPhaseState:
             return set()
         return {n for n in self.enabled_mcp_tools if n not in self.mcp_tool_names_all}
 
+    def tool_inventory(self) -> dict[str, list[str]]:
+        pool = self.colony_tools if self.phase == "colony" else self.independent_tools
+        return {
+            "loaded": sorted(t.name for t in self.get_current_tools()),
+            "searchable": sorted(t.name for t in self.get_searchable_tools()),
+            "disabled": sorted(t.name for t in pool if not self._passes_allowlist(t.name)),
+            "unavailable": sorted(self.unregistered_allowlisted_names()),
+        }
+
     def promote_searched_tools(self, names: list[str]) -> list[str]:
         """Move searched tool names into the loaded (eager) set.
 

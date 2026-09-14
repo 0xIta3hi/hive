@@ -101,7 +101,7 @@ Hive 是面向那些正将 AI 智能体从原型推向生产的团队的多智�
 
 - Python 3.11+ 用于智能体开发
 - 一个为智能体提供动力的 LLM 提供商
-- **ripgrep（可选，Windows 上推荐）：** `terminal_rg` / `terminal_glob` 搜索工具使用 ripgrep 来实现更快的文件搜索。如果未安装，则会使用 Python 回退方案。在 Windows 上：`winget install BurntSushi.ripgrep` 或 `scoop install ripgrep`
+- **ripgrep（完整搜索所需）：** Quickstart 会安装并验证 `rg`。已有环境可运行 `uv run scripts/ensure_ripgrep.py --install` 修复。Windows 包名为 `BurntSushi.ripgrep.MSVC`；自定义安装位置可通过 `HIVE_RIPGREP_PATH` 指定可执行文件的绝对路径。缺少 `rg` 时，`terminal_rg` 默认报错，只有显式设置 `allow_fallback=True` 才使用近似搜索。
 
 > **Windows 用户：** 通过 `quickstart.ps1` 和 `hive.ps1` 支持原生 Windows。请在 PowerShell 5.1+ 中运行它们。WSL 也是一个选项，但并非必需。
 

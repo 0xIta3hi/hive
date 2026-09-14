@@ -4,6 +4,7 @@ default_tool_categories:
 - email_senders
 - file_ops
 - terminal_basic
+- code_editing
 - browser_basic
 - browser_interaction
 - research
